@@ -1,7 +1,5 @@
 from sqlalchemy import Sequence, Column, ForeignKey, Integer, String, Date
 from sqlalchemy.orm import relationship
-from Modelo.Contrato import Contrato
-from Repositorio.RegistroDeOcorenciaWord import RegistroDeOcorrenciaWord
 from Repositorio.BancoDeDados import Base, session
 
 
@@ -18,18 +16,19 @@ class RegistroDeOcorrencia(Base):
     assinatura_fiscalizacao = Column(String)
     assinatura_contratada = Column(String)
     id_contrato = Column(Integer, ForeignKey('contratos.id'))
-    contrato = relationship("Contrato", back_populates="registro_de_ocorrencia")
+    contrato = relationship("Contrato")
 
     def __init__(self, _numero, _tipo, _data, _corpo_fiscalizacao, _corpo_contratada, _assinatura_fiscalizacao,
                  _assinatura_contratada, _contrato):
-        numero = _numero
-        tipo = _tipo
-        data = _data
-        corpo_fiscalizacao = _corpo_fiscalizacao
-        corpo_contratada = _corpo_contratada
-        assinatura_fiscalizacao = _assinatura_fiscalizacao
-        assinatura_contratada = _assinatura_contratada
-        contrato = _contrato
+
+        self.numero = _numero
+        self.tipo = _tipo
+        self.data = _data
+        self.corpo_fiscalizacao = _corpo_fiscalizacao
+        self.corpo_contratada = _corpo_contratada
+        self.assinatura_fiscalizacao = _assinatura_fiscalizacao
+        self.assinatura_contratada = _assinatura_contratada
+        self.contrato = _contrato
 
     def adicionar(self):
         session.add(self)

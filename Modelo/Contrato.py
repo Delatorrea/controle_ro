@@ -8,7 +8,6 @@ class Contrato(Base):
     __tablename__ = 'contratos'
 
     id = Column(Integer, Sequence('contrato_id_seq'), primary_key=True)
-    titulo = Column(String)
     instrumento_contratual = Column(Integer)
     contrato_sap = Column(Integer)
     orgao = Column(String)
@@ -19,7 +18,6 @@ class Contrato(Base):
     inicio = Column(Date)
     termino = Column(Date)
     local_execucao = Column(String)
-    registro_de_ocorrencia = relationship('RegistroDeOcorrencia', back_populates='contratos')
 
     def __init__(self, _instrumento_contratual, _contrato_sap, _orgao, _contratada, _autorizacao_servico,
                  _prazo_contratual, _obj_contrato, _inicio, _termino, _local_execucao):
