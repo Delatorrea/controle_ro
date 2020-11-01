@@ -1,6 +1,5 @@
 from sqlalchemy import Sequence, Column, Integer, String, Date
-from sqlalchemy.orm import relationship
-from Repositorio.BancoDeDados import Base, session
+from Repositorio.BancoDeDados import Base
 
 
 class Contrato(Base):
@@ -32,23 +31,3 @@ class Contrato(Base):
         self.inicio = _inicio
         self.termino = _termino
         self.local_execucao = _local_execucao
-
-    def adicionar(self):
-        session.add(self)
-        session.commit()
-
-    @classmethod
-    def encontrar_pelo_id(cls, _id):
-        return cls.query.filter_by(id=_id).first()
-
-    @classmethod
-    def encontrar_pelo_instrumento_contratual(cls, _instrumento_contratual):
-        return cls.query.filter_by(instrumento_contratual=_instrumento_contratual).first()
-
-    @classmethod
-    def listar(cls):
-        return cls.query.all()
-
-    def remover(self):
-        session.delete(self)
-        session.commit()

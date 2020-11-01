@@ -1,6 +1,6 @@
-from sqlalchemy import Sequence, Column, ForeignKey, Integer, String, Date
+from sqlalchemy import Sequence, Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
-from Repositorio.BancoDeDados import Base, session
+from Repositorio.BancoDeDados import Base
 
 
 class RegistroDeOcorrencia(Base):
@@ -15,8 +15,8 @@ class RegistroDeOcorrencia(Base):
     corpo_contratada = Column(String)
     assinatura_fiscalizacao = Column(String)
     assinatura_contratada = Column(String)
-    id_contrato = Column(Integer, ForeignKey('contratos.id'))
-    contrato = relationship("Contrato")
+    contrato_id = Column(Integer, ForeignKey('contratos.id'))
+    contrato = relationship("Contrato", backref="registro_de_ocorrencia")
 
     def __init__(self, _numero, _tipo, _data, _corpo_fiscalizacao, _corpo_contratada, _assinatura_fiscalizacao,
                  _assinatura_contratada, _contrato):
@@ -29,23 +29,3 @@ class RegistroDeOcorrencia(Base):
         self.assinatura_fiscalizacao = _assinatura_fiscalizacao
         self.assinatura_contratada = _assinatura_contratada
         self.contrato = _contrato
-
-    def adicionar(self):
-        session.add(self)
-        session.commit()
-
-    @classmethod
-    def encontrar_pelo_id(cls, _id):
-        return cls.query.filter_by(id=_id).first()
-
-    @classmethod
-    def encontrar_pelo_nome(cls, _numero):
-        return cls.query.filter_by(numero=_numero).first()
-
-    @classmethod
-    def listar(cls):
-        return cls.query.all()
-
-    def remover(self):
-        session.delete(self)
-        session.commit()
