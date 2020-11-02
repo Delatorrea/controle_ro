@@ -113,7 +113,7 @@ class RegistroDeOcorrenciaWord:
         if value:
             try:
                 valor = value.split('\n')
-                value = int(valor[1].replace(' DIAS',''))
+                value = int(valor[1].replace(' DIAS', ''))
                 self.__prazo_contratual = value
             except Exception as e:
                 raise Exception("Prazo Contratual inválido\n"
@@ -290,6 +290,7 @@ class RegistroDeOcorrenciaWord:
         except Exception as e:
             raise Exception(e)
 
+    @property
     def __str__(self):
         obj = 'Numero:................... {0} \n' + \
               'Data:..................... {1} \n' + \

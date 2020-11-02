@@ -1,6 +1,6 @@
 from sqlalchemy import Sequence, Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
-from Repositorio.BancoDeDados import Base
+from Repositorio.BancoDeDados import Base, Session, engine
 
 
 class RegistroDeOcorrencia(Base):
@@ -29,3 +29,6 @@ class RegistroDeOcorrencia(Base):
         self.assinatura_fiscalizacao = _assinatura_fiscalizacao
         self.assinatura_contratada = _assinatura_contratada
         self.contrato = _contrato
+        self.Base = Base()
+        self.session = Session()
+        self.Base.create_all(engine)
