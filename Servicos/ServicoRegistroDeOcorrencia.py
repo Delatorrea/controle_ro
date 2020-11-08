@@ -11,12 +11,20 @@ class ServicoRegistroDeOcorrencia:
         session.commit()
         session.close()
 
+    def editar(self, value):
+        RegistroDeOcorrencia = self
+        RegistroDeOcorrencia.numero = value
+        session.commit()
+        session.close()
+
+    def apagar(self):
+        session.delete(self)
+        session.commit()
+        session.close()
+
     def buscar_por_numero(self):
         __registro = session.query(RegistroDeOcorrencia) \
             .filter(RegistroDeOcorrencia.numero == self) \
             .first()
         session.close()
         return __registro
-
-    if __name__ == '__main__':
-        inserir(RegistroDeOcorrencia)

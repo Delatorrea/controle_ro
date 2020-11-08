@@ -1,8 +1,8 @@
 from Repositorio.RegistroDeOcorenciaWord import RegistroDeOcorrenciaWord
-from Servicos.ServicoRegistroDeOcorrencia import ServicoRegistroDeOcorrencia
 from Servicos.ServicoContrato import ServicoContrato
-from Modelo.RegistroDeOcorrencia import RegistroDeOcorrencia
+from Servicos.ServicoRegistroDeOcorrencia import ServicoRegistroDeOcorrencia
 from Modelo.Contrato import Contrato
+from Modelo.RegistroDeOcorrencia import RegistroDeOcorrencia
 
 
 def inserir():
@@ -23,7 +23,7 @@ def inserir():
 
         ServicoRegistroDeOcorrencia.inserir(r)
     else:
-        print('Já Existe')
+        print('Já existe')
 
 
 if __name__ == '__main__':

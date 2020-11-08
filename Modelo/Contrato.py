@@ -1,5 +1,5 @@
 from sqlalchemy import Sequence, Column, Integer, String, Date
-from Repositorio.BancoDeDados import Base, Session, engine
+from Repositorio.BancoDeDados import Base
 
 
 class Contrato(Base):
@@ -31,6 +31,3 @@ class Contrato(Base):
         self.inicio = _inicio
         self.termino = _termino
         self.local_execucao = _local_execucao
-        self.Base = Base()
-        self.session = Session()
-        self.Base.create_all(engine)
