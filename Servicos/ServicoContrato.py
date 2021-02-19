@@ -1,8 +1,7 @@
-from Repositorio.BancoDeDados import Session, engine, Base
+from Repositorio.BancoDeDados import Session
 from Modelo.Contrato import Contrato
 
 session = Session()
-Base.metadata.create_all(engine)
 
 
 class ServicoContrato:

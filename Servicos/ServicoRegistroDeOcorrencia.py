@@ -1,8 +1,7 @@
-from Repositorio.BancoDeDados import Session, engine, Base
+from Repositorio.BancoDeDados import Session
 from Modelo.RegistroDeOcorrencia import RegistroDeOcorrencia
 
 session = Session()
-Base.metadata.create_all(engine)
 
 
 class ServicoRegistroDeOcorrencia:
@@ -11,11 +10,11 @@ class ServicoRegistroDeOcorrencia:
         session.commit()
         session.close()
 
-    def editar(self, value):
-        RegistroDeOcorrencia = self
-        RegistroDeOcorrencia.numero = value
+    def editar(self):
+        RegistroDeOcorrencia.data = self.data
         session.commit()
         session.close()
+        print('Editado com sucesso!')
 
     def apagar(self):
         session.delete(self)

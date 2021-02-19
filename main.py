@@ -6,31 +6,34 @@ from Modelo.RegistroDeOcorrencia import RegistroDeOcorrencia
 
 
 def inserir():
-    w = RegistroDeOcorrenciaWord('./RO.docx')
-    w.carrega_arquivo()
+    word = RegistroDeOcorrenciaWord('./RO.docx')
+    word.carrega_arquivo()
 
-    c = ServicoContrato.buscar_por_instrumento_contratual(
-        w.instrumento_contratual
+    contrato = ServicoContrato.buscar_por_instrumento_contratual(
+        word.instrumento_contratual
     )
 
-    if c is None:
-        c = Contrato(
-            w.instrumento_contratual, w.contrato_sap, w.orgao, w.contratada,
-            w.autorizacao_servico, w.prazo_contratual, w.obj_contrato,
-            w.inicio, w.termino, w.local_execucao
+    if contrato is None:
+        contrato = Contrato(
+            word.instrumento_contratual, word.contrato_sap, word.orgao,
+            word.contratada, word.autorizacao_servico,
+            word.prazo_contratual, word.obj_contrato, word.inicio,
+            word.termino, word.local_execucao
         )
 
-        ServicoContrato.inserir(c)
+        contrato.inserir()
 
-    if ServicoRegistroDeOcorrencia.buscar_por_numero(w.numero) is None:
-        r = RegistroDeOcorrencia(
-            w.numero, w.tipo.value, w.data, w.corpo_fiscalizacao,
-            w.corpo_contratada, w.assinatura_fiscalizacao,
-            w.corpo_contratada, c)
+    rdo = ServicoRegistroDeOcorrencia.buscar_por_numero(word.numero)
 
-        ServicoRegistroDeOcorrencia.inserir(r)
+    rdo_novo = RegistroDeOcorrencia(
+        word.numero, word.tipo.value, word.data, word.corpo_fiscalizacao,
+        word.corpo_contratada, word.assinatura_fiscalizacao,
+        word.corpo_contratada, contrato)
+
+    if rdo is None:
+        rdo.inserir(rdo_novo)
     else:
-        print('Já existe')
+        rdo.editar(rdo_novo)
 
 
 if __name__ == '__main__':

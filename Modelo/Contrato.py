@@ -18,8 +18,11 @@ class Contrato(Base):
     termino = Column(Date)
     local_execucao = Column(String)
 
-    def __init__(self, _instrumento_contratual, _contrato_sap, _orgao, _contratada, _autorizacao_servico,
-                 _prazo_contratual, _obj_contrato, _inicio, _termino, _local_execucao):
+    def __init__(
+        self, _instrumento_contratual, _contrato_sap,
+        _orgao, _contratada, _autorizacao_servico, _prazo_contratual,
+        _obj_contrato, _inicio, _termino, _local_execucao
+    ):
 
         self.instrumento_contratual = _instrumento_contratual
         self.contrato_sap = _contrato_sap

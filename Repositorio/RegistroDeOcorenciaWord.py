@@ -211,7 +211,9 @@ class RegistroDeOcorrenciaWord:
     @data.setter
     def data(self, value):
         if value:
-            value = datetime.datetime.strptime(value.replace('DATA\n', ''), '%d/%m/%Y')
+            value = datetime.datetime.strptime(
+                value.replace('DATA\n', ''), '%d/%m/%Y'
+            )
             self.__data = value.date()
 
     @property
@@ -270,7 +272,9 @@ class RegistroDeOcorrenciaWord:
     def carrega_arquivo(self):
         try:
             self.app_word = docx.Document(self.endereco_arquivo)
-            self.instrumento_contratual = self.app_word.tables[0].cell(1, 3).text
+            self.instrumento_contratual = self.app_word.tables[0].cell(
+                1, 3
+            ).text
             self.contrato_sap = self.app_word.tables[0].cell(1, 3).text
             self.orgao = self.app_word.tables[0].cell(2, 0).text
             self.contratada = self.app_word.tables[0].cell(2, 3).text
@@ -285,33 +289,40 @@ class RegistroDeOcorrenciaWord:
             self.tipo = self.app_word.tables[0].cell(1, 0).text
             self.corpo_fiscalizacao = self.app_word.tables[0].cell(6, 0).text
             self.corpo_contratada = self.app_word.tables[0].cell(6, 3).text
-            self.assinatura_fiscalizacao = self.app_word.tables[0].cell(8, 0).text
-            self.assinatura_contratada = self.app_word.tables[0].cell(8, 3).text
+            self.assinatura_fiscalizacao = self.app_word.tables[0].cell(
+                8, 0
+            ).text
+            self.assinatura_contratada = self.app_word.tables[0].cell(
+                8, 3
+            ).text
         except Exception as e:
             raise Exception(e)
 
     @property
     def __str__(self):
-        obj = 'Numero:................... {0} \n' + \
-              'Data:..................... {1} \n' + \
-              'Tipo:..................... {2} \n' + \
-              'Corpo Fiscalização:....... {3} \n' + \
-              'Corpo Contratada:......... {4} \n' + \
-              'Assinatura Fiscalização:.. {5} \n' + \
-              'Assinatura Contratada:.... {6} \n' + \
-              'Instrumento Contratual:................................... {7} \n' + \
-              'Contrato SAP:............................................. {8} \n' + \
-              'Órgão:.................................................... {9} \n' + \
-              'Contratada:............................................... {10} \n' + \
-              'Autorização de Serviço (AS):.............................. {11} \n' + \
-              'Prazo Contratual:......................................... {12} Dias \n' + \
-              'Objeto do Contrato / Instalação / Natureza dos Serviços:.. {13} \n' + \
-              'Início:................................................... {14} \n' + \
-              'Término:.................................................. {15} \n' + \
-              'Local de Execução dos Serviços:........................... {16} \n'
+        obj = 'Numero:........................ {0} \n' + \
+              'Data:.......................... {1} \n' + \
+              'Tipo:.......................... {2} \n' + \
+              'Corpo Fiscalização:............ {3} \n' + \
+              'Corpo Contratada:...............{4} \n' + \
+              'Assinatura Fiscalização:....... {5} \n' + \
+              'Assinatura Contratada:......... {6} \n' + \
+              'Instrumento Contratual:........ {7} \n' + \
+              'Contrato SAP:.................. {8} \n' + \
+              'Órgão:......................... {9} \n' + \
+              'Contratada:.................... {10} \n' + \
+              'Autorização de Serviço (AS):... {11} \n' + \
+              'Prazo Contratual:.............. {12} Dias \n' + \
+              'Objeto do Contrato............. {13} \n' + \
+              'Início:........................ {14} \n' + \
+              'Término:....................... {15} \n' + \
+              'Local de Execução dos Serviços:.{16} \n'
+
         return obj.format(
             self.numero, self.data, self.tipo.name, self.corpo_fiscalizacao,
-            self.corpo_contratada, self.assinatura_fiscalizacao, self.assinatura_contratada,
-            self.instrumento_contratual, self.contrato_sap, self.orgao, self.contratada,
-            self.autorizacao_servico, self.prazo_contratual, self.obj_contrato, self.inicio,
-            self.termino, self.local_execucao)
+            self.corpo_contratada, self.assinatura_fiscalizacao,
+            self.assinatura_contratada, self.instrumento_contratual,
+            self.contrato_sap, self.orgao, self.contratada,
+            self.autorizacao_servico, self.prazo_contratual,
+            self.obj_contrato, self.inicio, self.termino, self.local_execucao
+            )

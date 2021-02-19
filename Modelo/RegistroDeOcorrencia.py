@@ -18,8 +18,10 @@ class RegistroDeOcorrencia(Base):
     contrato_id = Column(Integer, ForeignKey('contratos.id'))
     contrato = relationship("Contrato", backref="registro_de_ocorrencia")
 
-    def __init__(self, _numero, _tipo, _data, _corpo_fiscalizacao, _corpo_contratada, _assinatura_fiscalizacao,
-                 _assinatura_contratada, _contrato):
+    def __init__(
+        self, _numero, _tipo, _data, _corpo_fiscalizacao, _corpo_contratada,
+        _assinatura_fiscalizacao, _assinatura_contratada, _contrato
+    ):
 
         self.numero = _numero
         self.tipo = _tipo
