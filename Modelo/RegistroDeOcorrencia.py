@@ -1,6 +1,6 @@
 from sqlalchemy import Sequence, Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
-from Repositorio.BancoDeDados import Base
+from Repositorio.BancoDeDados import Base, Session
 
 
 class RegistroDeOcorrencia(Base):
@@ -31,3 +31,30 @@ class RegistroDeOcorrencia(Base):
         self.assinatura_fiscalizacao = _assinatura_fiscalizacao
         self.assinatura_contratada = _assinatura_contratada
         self.contrato = _contrato
+        self.session = Session()
+
+    def inserir(self):
+        self.session.add(self)
+        self.session.commit()
+        self.session.close()
+        print('Inserido com sucesso!')
+
+    def editar(self, value):
+        self.data = value.data
+        self.session.commit()
+        self.session.close()
+        print('Editado com sucesso!')
+
+    def apagar(self):
+        self.session.delete(self)
+        self.session.commit()
+        self.session.close()
+
+    def buscar_por_numero(self, value):
+        self.__registro = self.session.query(self.__class__) \
+            .filter(self.numero == value) \
+            .first()
+        self.session.close()
+
+        print(self.__registro)
+        return self.__registro

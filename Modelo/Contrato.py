@@ -1,9 +1,8 @@
 from sqlalchemy import Sequence, Column, Integer, String, Date
-from Repositorio.BancoDeDados import Base
+from Repositorio.BancoDeDados import Base, Session
 
 
-class Contrato(Base):
-
+class Contrato (Base):
     __tablename__ = 'contratos'
 
     id = Column(Integer, Sequence('contrato_id_seq'), primary_key=True)
@@ -34,3 +33,18 @@ class Contrato(Base):
         self.inicio = _inicio
         self.termino = _termino
         self.local_execucao = _local_execucao
+        self.session = Session()
+
+    def inserir(self):
+        self.session.add(self)
+        self.session.commit()
+        self.session.close()
+
+    def buscar_por_instrumento_contratual(self, value):
+        self.__contrato = self.session.query(self.__class__) \
+            .filter(
+            self.instrumento_contratual == value
+            ) \
+            .first()
+        self.session.close()
+        return self.__contrato
