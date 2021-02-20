@@ -5,6 +5,5 @@ from sqlalchemy.orm import sessionmaker
 engine = create_engine('sqlite:///banco.db', echo=True)
 
 Session = sessionmaker(bind=engine)
-session = Session()
 
 Base = declarative_base()

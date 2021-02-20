@@ -1,5 +1,7 @@
 from sqlalchemy import Sequence, Column, Integer, String, Date
-from Repositorio.BancoDeDados import Base, Session
+from Modelo.RegistroDeOcorrencia import RegistroDeOcorrencia
+from sqlalchemy.orm import relationship
+from Repositorio.BancoDeDados import Base
 
 
 class Contrato (Base):
@@ -16,35 +18,19 @@ class Contrato (Base):
     inicio = Column(Date)
     termino = Column(Date)
     local_execucao = Column(String)
+    registros = relationship(
+        RegistroDeOcorrencia, backref='contratos'
+    )
 
-    def __init__(
-        self, _instrumento_contratual, _contrato_sap,
-        _orgao, _contratada, _autorizacao_servico, _prazo_contratual,
-        _obj_contrato, _inicio, _termino, _local_execucao
-    ):
+    def __init__(self, obj):
 
-        self.instrumento_contratual = _instrumento_contratual
-        self.contrato_sap = _contrato_sap
-        self.orgao = _orgao
-        self.contratada = _contratada
-        self.autorizacao_servico = _autorizacao_servico
-        self.prazo_contratual = _prazo_contratual
-        self.obj_contrato = _obj_contrato
-        self.inicio = _inicio
-        self.termino = _termino
-        self.local_execucao = _local_execucao
-        self.session = Session()
-
-    def inserir(self):
-        self.session.add(self)
-        self.session.commit()
-        self.session.close()
-
-    def buscar_por_instrumento_contratual(self, value):
-        self.__contrato = self.session.query(self.__class__) \
-            .filter(
-            self.instrumento_contratual == value
-            ) \
-            .first()
-        self.session.close()
-        return self.__contrato
+        self.instrumento_contratual = obj.instrumento_contratual
+        self.contrato_sap = obj.contrato_sap
+        self.orgao = obj.orgao
+        self.contratada = obj.contratada
+        self.autorizacao_servico = obj.autorizacao_servico
+        self.prazo_contratual = obj.prazo_contratual
+        self.obj_contrato = obj.obj_contrato
+        self.inicio = obj.inicio
+        self.termino = obj.termino
+        self.local_execucao = obj.local_execucao

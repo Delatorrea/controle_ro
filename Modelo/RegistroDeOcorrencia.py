@@ -1,6 +1,6 @@
 from sqlalchemy import Sequence, Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
-from Repositorio.BancoDeDados import Base, Session
+from Repositorio.BancoDeDados import Base
 
 
 class RegistroDeOcorrencia(Base):
@@ -16,45 +16,15 @@ class RegistroDeOcorrencia(Base):
     assinatura_fiscalizacao = Column(String)
     assinatura_contratada = Column(String)
     contrato_id = Column(Integer, ForeignKey('contratos.id'))
-    contrato = relationship("Contrato", backref="registro_de_ocorrencia")
+    contrato = relationship("Contrato")
 
-    def __init__(
-        self, _numero, _tipo, _data, _corpo_fiscalizacao, _corpo_contratada,
-        _assinatura_fiscalizacao, _assinatura_contratada, _contrato
-    ):
+    def __init__(self, obj, _contrato):
 
-        self.numero = _numero
-        self.tipo = _tipo
-        self.data = _data
-        self.corpo_fiscalizacao = _corpo_fiscalizacao
-        self.corpo_contratada = _corpo_contratada
-        self.assinatura_fiscalizacao = _assinatura_fiscalizacao
-        self.assinatura_contratada = _assinatura_contratada
+        self.numero = obj.numero
+        self.tipo = obj.tipo
+        self.data = obj.data
+        self.corpo_fiscalizacao = obj.corpo_fiscalizacao
+        self.corpo_contratada = obj.corpo_contratada
+        self.assinatura_fiscalizacao = obj.assinatura_fiscalizacao
+        self.assinatura_contratada = obj.assinatura_contratada
         self.contrato = _contrato
-        self.session = Session()
-
-    def inserir(self):
-        self.session.add(self)
-        self.session.commit()
-        self.session.close()
-        print('Inserido com sucesso!')
-
-    def editar(self, value):
-        self.data = value.data
-        self.session.commit()
-        self.session.close()
-        print('Editado com sucesso!')
-
-    def apagar(self):
-        self.session.delete(self)
-        self.session.commit()
-        self.session.close()
-
-    def buscar_por_numero(self, value):
-        self.__registro = self.session.query(self.__class__) \
-            .filter(self.numero == value) \
-            .first()
-        self.session.close()
-
-        print(self.__registro)
-        return self.__registro
