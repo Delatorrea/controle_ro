@@ -1,0 +1,3 @@
+from ServicoEmail import baixa_anexos
+from ServicoContrato import ServicoContrato
+from ServicoRegistroDeOcorrencia import ServicoRegistroDeOcorrencia

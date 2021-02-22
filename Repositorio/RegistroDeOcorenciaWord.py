@@ -28,6 +28,7 @@ class RegistroDeOcorrenciaWord:
         self.assinatura_contratada = None
         self.app_word = None
         self.endereco_arquivo = arquivo
+        self.carrega_arquivo()
 
     @property
     def instrumento_contratual(self):

@@ -1,4 +1,3 @@
-from Repositorio.BancoDeDados import Session
 from Modelo.RegistroDeOcorrencia import RegistroDeOcorrencia
 
 
@@ -6,15 +5,12 @@ class ServicoRegistroDeOcorrencia:
     def __init__(self) -> None:
         pass
 
-    def inserir(self, obj):
-        self.session = Session()
-        self.session.add(obj)
-        self.session.commit()
-        self.session.close()
+    def inserir(self, session, obj):
+        session.add(obj)
+        session.commit()
 
-    def editar(self, obj1, obj2):
-        self.session = Session()
-        self.result = self.session.query(
+    def editar(self, session, obj1, obj2):
+        self.result = session.query(
             RegistroDeOcorrencia
             ).filter(
                 RegistroDeOcorrencia.id == obj1.id
@@ -23,8 +19,7 @@ class ServicoRegistroDeOcorrencia:
                     RegistroDeOcorrencia.data: obj2.data
                 }, synchronize_session=False
             )
-        self.session.commit()
-        self.session.close()
+        session.commit()
 
         if self.result == 1:
             print('Editado com sucesso!')
@@ -32,32 +27,26 @@ class ServicoRegistroDeOcorrencia:
             print('Não foi editado!')
         return self.result
 
-    def apagar(self, obj):
-        self.session = Session()
-        self.session.query(
+    def apagar(self, session, obj):
+        session.query(
             RegistroDeOcorrencia
         ).filter(
             RegistroDeOcorrencia.id == obj.id
         ).delete()
-        self.session.commit()
-        self.session.close()
+        session.commit()
 
-    def buscar_por_numero(self, obj) -> object:
-        self.session = Session()
-        self.__rdo = self.session.query(
+    def buscar_por_numero(self, session, obj) -> object:
+        self.__rdo = session.query(
             RegistroDeOcorrencia
         ).filter(
             RegistroDeOcorrencia.numero == obj.numero
         ).first()
-        self.session.close()
         return self.__rdo
 
-    def buscar_por_id(self, obj) -> object:
-        self.session = Session()
-        self.__rdo = self.session.query(
+    def buscar_por_id(self, session, obj) -> object:
+        self.__rdo = session.query(
             RegistroDeOcorrencia
         ).filter(
             RegistroDeOcorrencia.id == obj.id
         ).first()
-        self.session.close()
         return self.__rdo

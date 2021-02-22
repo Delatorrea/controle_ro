@@ -1,5 +1,6 @@
-from sqlalchemy import Sequence, Column, Integer, String, Date, ForeignKey
+from sqlalchemy import Sequence, Column, Integer, String, Date, ForeignKey, Enum
 from sqlalchemy.orm import relationship
+from Modelo.Enums.TipoRO import Tipo
 from Repositorio.BancoDeDados import Base
 
 
@@ -9,7 +10,7 @@ class RegistroDeOcorrencia(Base):
 
     id = Column(Integer, Sequence('ro_id_seq'),  primary_key=True)
     numero = Column(Integer)
-    tipo = Column(Integer)
+    tipo = Column(Enum(Tipo))
     data = Column(Date)
     corpo_fiscalizacao = Column(String)
     corpo_contratada = Column(String)
