@@ -13,11 +13,12 @@ def baixa_anexos(email, senha, local_path):
     )
 
     for item in account.inbox.filter(
-        is_read=False, has_attachments=True
+        subject__contains='RO', has_attachments=True, is_read=False
     ):
         for attachment in item.attachments:
-            if isinstance(attachment, FileAttachment):
-                print(attachment.name)
+            if isinstance(attachment, FileAttachment) and \
+                    'RO_PETROBRAS' in attachment.name and \
+                    '.docx' in attachment.name:
                 path = os.path.join(local_path, attachment.name)
                 with open(path, 'wb') as f:
                     f.write(attachment.content)

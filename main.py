@@ -10,35 +10,18 @@ from Modelo.RegistroDeOcorrencia import RegistroDeOcorrencia
 def inserir():
     """Inserir."""
     with session_scope() as session:
-        for i in range(100):
-            word = RegistroDeOcorrenciaWord('./RO.docx')
+        word = RegistroDeOcorrenciaWord('./RO.docx')
 
-            contratoModelo = Contrato(word)
+        contrato_modelo = Contrato(word)
+        contrato = ServicoContrato().buscar_por_instrumento_contratual(
+            session, word
+        )
 
-            servicoContrato = ServicoContrato()
+        if contrato is None:
+            contrato = ServicoContrato().inserir(session, contrato_modelo)
 
-            contrato = servicoContrato.buscar_por_instrumento_contratual(
-                session, word
-            )
-
-            if contrato is None:
-                contrato = servicoContrato.inserir(session, contratoModelo)
-
-            servicoRegistroDeOcorrencia = ServicoRegistroDeOcorrencia()
-
-            rdo = RegistroDeOcorrencia(word, contrato)
-            # rdo_existente = servicoRegistroDeOcorrencia.buscar_por_numero(
-            #     session, rdo
-            # )
-
-            # if rdo_existente is None:
-            servicoRegistroDeOcorrencia.inserir(session, rdo)
-            # else:
-            #     print(
-            #         servicoRegistroDeOcorrencia.editar(
-            #             session, rdo_existente, rdo
-            #         )
-            #     )
+        rdo = RegistroDeOcorrencia(word, contrato)
+        ServicoRegistroDeOcorrencia().inserir(session, rdo)
 
 
 if __name__ == '__main__':

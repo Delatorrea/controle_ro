@@ -2,15 +2,15 @@ from Modelo.RegistroDeOcorrencia import RegistroDeOcorrencia
 
 
 class ServicoRegistroDeOcorrencia:
-    def __init__(self) -> None:
-        pass
 
-    def inserir(self, session, obj):
+    @staticmethod
+    def inserir(session, obj):
         session.add(obj)
         session.commit()
 
-    def editar(self, session, obj1, obj2):
-        self.result = session.query(
+    @staticmethod
+    def editar(session, obj1, obj2):
+        result = session.query(
             RegistroDeOcorrencia
             ).filter(
                 RegistroDeOcorrencia.id == obj1.id
@@ -21,32 +21,34 @@ class ServicoRegistroDeOcorrencia:
             )
         session.commit()
 
-        if self.result == 1:
+        if result == 1:
             print('Editado com sucesso!')
         else:
             print('Não foi editado!')
-        return self.result
+        return result
 
-    def apagar(self, session, obj):
-        session.query(
+    @staticmethod
+    def apagar(session, obj):
+        result = session.query(
             RegistroDeOcorrencia
         ).filter(
             RegistroDeOcorrencia.id == obj.id
         ).delete()
         session.commit()
+        return result
 
-    def buscar_por_numero(self, session, obj) -> object:
-        self.__rdo = session.query(
+    @staticmethod
+    def buscar_por_numero(session, obj) -> object:
+        return session.query(
             RegistroDeOcorrencia
         ).filter(
             RegistroDeOcorrencia.numero == obj.numero
         ).first()
-        return self.__rdo
 
-    def buscar_por_id(self, session, obj) -> object:
-        self.__rdo = session.query(
+    @staticmethod
+    def buscar_por_id(session, obj) -> object:
+        return session.query(
             RegistroDeOcorrencia
         ).filter(
             RegistroDeOcorrencia.id == obj.id
         ).first()
-        return self.__rdo
